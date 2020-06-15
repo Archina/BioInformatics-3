@@ -1,0 +1,5 @@
+Hello this is an experiment.
+
+Today I felt like attempting to do the programming lesson in Rust.
+
+You find the terminal on the right. Please note that just pressing the run button atop only executes the empty main.rs. It is not needed and instead you should execute the program by typing `cargo run` in the terminal.
