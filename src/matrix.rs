@@ -64,6 +64,7 @@ impl Matrix<f64>{
 
 impl<T: Clone + fmt::Display> fmt::Display for Matrix<T>{
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let mut result = fmt::Result::Ok(());
         let lengths_column: Vec<usize> = vec![0; self.width].iter().enumerate()
             .map(|(idx, _)| {
                 vec![0; self.height].iter().enumerate().map(|(idx_x, _)| format!("{}", self.get(idx_x, idx)).len()).max().unwrap()
@@ -82,10 +83,31 @@ impl<T: Clone + fmt::Display> fmt::Display for Matrix<T>{
                 } else {
                     format!("{}, ", to_string)
                 };
-                write!(f, "{}", to_string);
+                result = result.and(write!(f, "{}", to_string));
             }
-            write!(f, "\n");
+            result = result.and(write!(f, "\n"));
         }
         write!(f, "")
     }
+}
+
+mod test{
+
+    use crate::matrix::Matrix;
+
+    #[test]
+    fn test_matrix() {
+        let mut matrix = Matrix::<f64>::new(11, 10, 8184.0);
+        matrix.set(5, 0, 218334.0);
+        matrix.set(9, 4, 21833423.0);
+        matrix.set(9, 9, 0.0); // Zero on the diagonal
+
+        assert_eq!(matrix.get(9,9), &0.0);
+        assert_eq!(matrix.min(), 8184.0);
+        assert_eq!(matrix.max(), 21833423.0);
+        
+        matrix.set(0, 3, -0.1);
+        assert_eq!(matrix.min(), -0.1);
+    }
+
 }
