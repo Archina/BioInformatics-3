@@ -1,11 +1,6 @@
-Hello this is an experiment.
+Hello this is an experiment in which I tried to use a different language in an approachable manner. I know that setting up a tool chain can be a rather excessive endevour and so I uploaded the source code here for review and execution. The whole source can also be found on github where you can easily download it. [https://github.com/Archina/BioInformatics-3]
 
-Today I felt like attempting to do the programming lesson in Rust.
-
-[Obsolete]
-You find the terminal on the right. Please note that just pressing the run button atop only executes the empty main.rs. It is not needed and instead you should execute the program by typing `cargo run` in the terminal.
-
-Seems I was able to fix the problem and you should now be able to use the run button.
+To execute the programm all you need to do is push the run button atop ^.
 
 The src/main.rs contains all main functionality. Here sequences are read from file align3 and aling1 are read, joined and written into the output folder.
 
