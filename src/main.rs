@@ -6,8 +6,6 @@ mod matrix;
 use matrix::Matrix;
 
 fn main() {
-    
-
 	println!("\n");
     let sequences_a = sequences::from_file(Path::new("data/align3.fasta"));
 	println!("Printing out sequences from align3.fasta:\n{:#?}\n\n", sequences_a);

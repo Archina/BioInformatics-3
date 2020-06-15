@@ -2,4 +2,16 @@ Hello this is an experiment.
 
 Today I felt like attempting to do the programming lesson in Rust.
 
+[Obsolete]
 You find the terminal on the right. Please note that just pressing the run button atop only executes the empty main.rs. It is not needed and instead you should execute the program by typing `cargo run` in the terminal.
+
+Seems I was able to fix the problem and you should now be able to use the run button.
+
+The src/main.rs contains all main functionality. Here sequences are read from file align3 and aling1 are read, joined and written into the output folder.
+
+Afterwards the sequences from align3 are used to create a hamming and cartor distance matrix. The min and max value is also stated.
+
+On the bottom of the file src/matrix.rs and well as src/sequences.rs you can find the tests that check for the functionality of the matrix as well as sequence functions.
+
+
+Please note that I corrected joining sequences of uneven length but did not do so with a proper alignment (for example using Smith-Waterman). I did think reason about checking it against each entry in the sequence but didn't got the time to include smith-waterman in this. As it wasn't explicity stated to join in new sequences with a reasonable alignment I left this out.
