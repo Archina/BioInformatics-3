@@ -64,7 +64,7 @@ impl Matrix<f64>{
 
 impl<T: Clone + fmt::Display> fmt::Display for Matrix<T>{
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut result = fmt::Result::Ok(());
+        let mut result = Ok(());
         let lengths_column: Vec<usize> = vec![0; self.width].iter().enumerate()
             .map(|(idx, _)| {
                 vec![0; self.height].iter().enumerate().map(|(idx_x, _)| format!("{}", self.get(idx_x, idx)).len()).max().unwrap()
