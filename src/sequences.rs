@@ -48,3 +48,29 @@ pub fn join(a: &Vec<Sequence>, b: &Vec<Sequence>) -> Vec<Sequence>{
     }
     output
 }
+
+pub fn distance_matrix_hamming(seqs: &Vec<Sequence>) -> crate::matrix::Matrix<f64> {
+    let mut matrix = crate::matrix::Matrix::<f64>::new(seqs.len(),seqs.len(), 0.0.into());
+
+    for l_idx in 0..seqs.len(){
+        for t_idx in 0..seqs.len(){
+            let left = &seqs[l_idx];
+            let top = &seqs[t_idx];
+            matrix.set(l_idx, t_idx, left.hamming_distance_relative(top).unwrap_or_default().into());
+        }
+    }
+    matrix
+}
+
+pub fn distance_matrix_cantor(seqs: &Vec<Sequence>, osf: f64) -> crate::matrix::Matrix<f64> {
+    let mut matrix = crate::matrix::Matrix::<f64>::new(seqs.len(),seqs.len(), 0.0.into());
+
+    for l_idx in 0..seqs.len(){
+        for t_idx in 0..seqs.len(){
+            let left = &seqs[l_idx];
+            let top = &seqs[t_idx];
+            matrix.set(l_idx, t_idx, left.jukes_cantor_distance(top, osf).unwrap_or_default().into());
+        }
+    }
+    matrix
+}

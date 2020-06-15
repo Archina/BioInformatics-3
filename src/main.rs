@@ -1,9 +1,5 @@
 use std::{path::Path};
 
-extern crate ordered_float;
-
-type OF = ordered_float::OrderedFloat<f64>;
-
 mod sequences;
 mod matrix;
 
@@ -55,15 +51,15 @@ impl Sequence {
 }
 
 fn main() {
-    let mut matrix = Matrix::<OF>::new(11, 10, 8184.0.into());
-    matrix.set(5, 0, 218334.0.into());
-    matrix.set(9, 4, 21833423.0.into());
-    matrix.set(9, 9, 0.0.into());
-
+    let mut matrix = Matrix::<f64>::new(11, 10, 8184.0);
+    matrix.set(5, 0, 218334.0);
+    matrix.set(9, 4, 21833423.0);
+    matrix.set(9, 9, 0.0);
+    
 	// Pretty printing and testing a matrix.
     println!("\n\nHere should be your matrix:\n{}", matrix);
-    println!("Max Val: {}", matrix.max().unwrap());
-    println!("Min Val: {}", matrix.min().unwrap());
+    println!("Max Val: {}", matrix.max());
+    println!("Min Val: {}", matrix.min());
 
 	println!("\n");
     let sequences_a = sequences::from_file(Path::new("data/align3.fasta"));
@@ -75,22 +71,10 @@ fn main() {
     println!("Joined sequences written to output.fasta:\n{:?}\n\n", result);
     sequences::to_file(Path::new("output.fasta"), &result);
 
-	println!("Calculating hamming distances:");
-    if let Some(first) = sequences_b.clone().first(){
-        for seq in sequences_b {
-			println!("SeqA: {}, SeqB: {}", first.content, seq.content);
-            if let Some(distance) = first.hamming_distance_relative(&seq){
-            	println!("Hamming: {}", distance);
-			}
-			if let Some(distance) = first.jukes_cantor_distance(&seq, 0.15){
-            	println!("Jukes-Cantor: {}", distance);
-			}
-			println!();
-        }
-    }
+    println!("Calculating hamming distances:");
+    println!("{}", sequences::distance_matrix_hamming(&sequences_b));
 
-    // TODO: Read Sequences & Distance
-
-    // TODO: Read Sequences and append them into one file
+    println!("Calculating cantor distances with substitution factor 0.15:");
+    println!("{}", sequences::distance_matrix_cantor(&sequences_b, 0.15));
 
 }

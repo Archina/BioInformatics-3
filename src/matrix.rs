@@ -36,27 +36,37 @@ impl<T: Clone> Matrix<T>{
     }
 }
 
-impl<T: Ord + Default + Copy> Matrix<T>{
-    pub fn max(&self) -> Option<&T>{
-        self.content.iter().map(|row| row.iter().max().unwrap()).max()
+impl Matrix<f64>{
+    pub fn max(&self) -> f64{
+        let mut max = std::f64::NAN;
+        for x_idx in 0..*self.width() {
+            for y_idx in 0..*self.height() {
+                if x_idx != y_idx {
+                    max = max.max(*self.get(y_idx, x_idx));
+                }
+            }
+        }
+        max
     }
 
-    // fn min(&self) -> Option<&T>{
-    //     self.content.iter().map(|row| row.iter().min().unwrap()).min()
-    // }
-}
-
-impl Matrix<ordered_float::OrderedFloat<f64>>{
-    pub fn min(&self) -> Option<&ordered_float::OrderedFloat<f64>>{
-        self.content.iter().map(|row| row.iter().filter(|&x| x != &0f64.into()).min().unwrap()).min()
+    pub fn min(&self) -> f64{
+        let mut min = std::f64::NAN;
+        for x_idx in 0..*self.width() {
+            for y_idx in 0..*self.height() {
+                if x_idx != y_idx {
+                    min = min.min(*self.get(y_idx, x_idx));
+                }
+            }
+        }
+        min
     }
 }
 
-impl<T: Ord + Clone + fmt::Display> fmt::Display for Matrix<T>{
+impl<T: Clone + fmt::Display> fmt::Display for Matrix<T>{
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let lengths_column: Vec<usize> = vec![0; self.width].iter().enumerate()
             .map(|(idx, _)| {
-                format!("{}", vec![0; self.height].iter().enumerate().map(|(idx_x, _)| self.get(idx_x, idx)).max().unwrap()).len()
+                vec![0; self.height].iter().enumerate().map(|(idx_x, _)| format!("{}", self.get(idx_x, idx)).len()).max().unwrap()
             })
             .collect();
         for row in &self.content {
